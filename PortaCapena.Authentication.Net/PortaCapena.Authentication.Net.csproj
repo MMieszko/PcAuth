@@ -71,5 +71,8 @@
       <Version>4.0.20126.16343</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PortaCapena.Authentication.Core.nuspec" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
