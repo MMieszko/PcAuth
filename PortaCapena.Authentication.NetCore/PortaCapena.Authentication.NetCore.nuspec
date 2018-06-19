@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <package >
-  <metadata>
-    <id>PortaCapena.Authentication.NetCore</id>
-    <version>1.0.0</version>
-    <title>Porta Capena token authentication for .NET Core based applications</title>
-    <authors>Mieszko Misztal</authors>
-    <owners>Porta Capena</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>https://github.com/MMieszko/PcAuth</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Token authentication libary includes generating JWT Token and refreshing each request. Fully configurable with Token Builder</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
-    <copyright>Copyright 2018</copyright>
-    <tags>Token Authentication Authorization Auth Identity OAuth</tags>
-  </metadata>
+	<metadata>
+		<id>PortaCapena.Authentication.NetCore</id>
+		<version>1.0.1</version>
+		<title>Token authentication for .NET Core based applications</title>
+		<authors>Mieszko Misztal</authors>
+		<owners>Porta Capena</owners>
+		<licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+		<projectUrl>https://github.com/MMieszko/PcAuth</projectUrl>
+		<iconUrl>https://raw.githubusercontent.com/MMieszko/PcAuth/master/PortaCapena.Authentication.Core/ic_project.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Token authentication libary includes generating JWT authentication token and optionally refreshing the token each request. Fully configurable with Token Builder</description>
+		<releaseNotes>Added specifications and dependencies</releaseNotes>
+		<copyright>Copyright 2018</copyright>
+		<tags>Token Authentication Authorization Auth Identity OAuth</tags>
+		<dependencies>
+			<dependency id="PortaCapena.Authentication.Core" version="1.0.0" />
+		</dependencies>
+	</metadata>
 	<files>
 		<file src="bin\Debug\netstandard2.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll" target="lib"/>
 		<file src="bin\Debug\netstandard2.0\PortaCapena.Authentication.Core.dll" target="lib"/>
 		<file src="bin\Debug\netstandard2.0\PortaCapena.Authentication.NetCore.dll" target="lib"/>
 	</files>
-	<dependencies>
-		<dependency id="PortaCapena.Authentication.Core" version="1.0.0" />
-	</dependencies>
 </package>
