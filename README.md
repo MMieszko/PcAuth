@@ -51,7 +51,7 @@ Second step is to configure the TokenOptions and regiester identity middleware i
                 .Build());
 ```
 
-The last step is handling unauthorize exception. This can be ommited if you have created your own exception middleware or so:
+The last step is handling unauthorize exception. This can be omitted if you have created your own exception middleware or so:
 ```csharp
   app.HandleAuthException(async (ctx, exc) =>
             {
@@ -61,15 +61,32 @@ The last step is handling unauthorize exception. This can be ommited if you have
             });
 ```
 
+### Customizing - .NET Core
+
+You can define custom middleware deriving from **PcIdentityMiddleware**
+There are two method available to override:
+* SetClaimsPrincipalAsync
+ 
+ This method is called after authentication token was sucesfully validated. As a parameter of the method accepts generated **ClaimsPrincipal** instance. The method body sets HttpContext.User with given claims and insert to HttpContext.Items["UserId"] user id claim.
+ 
+* RefreshTokenAsync
+
+While creating TokenOptions and AutoRefresh is set to true then the method is being executed. As a parameter method accept newly generated token. The method adds new header to the response with name given while building token. 
+
+You can also override methods when creating role identity handler derived from **PcIdentityHandler**
+
+* HandleRequirementAsync
+
+The method is responsible to decide if given principals in middleware are valid for current role.
+
+* OnUnauthorizedAsync
+
+The method is called when process from above method failed due to wrong role. The method throws **AuthException**.
+
+
 ### Quickstart - .NET Framework
 
 To be added.
-
-
-### Customizing - .NET Core
-
-To be added.
-
 
 ### Customizing - .NET Framework
 
