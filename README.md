@@ -2,6 +2,10 @@
 
 ### Quickstart - .NET Core
 
+Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
+
+> Install-Package PortaCapena.Authentication.NetCore -Version 1.0.1
+
 
 As the authentication is based on roles first we have to define roles, requirement and handler i.e:
 
