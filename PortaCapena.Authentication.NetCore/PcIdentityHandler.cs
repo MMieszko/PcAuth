@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using PortaCapena.Authentication.Core;
+using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace PortaCapena.Authentication.NetCore
 {

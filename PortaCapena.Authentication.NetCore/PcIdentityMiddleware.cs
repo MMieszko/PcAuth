@@ -2,8 +2,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using PortaCapena.Authentication.Core;
 using System.Net;
+using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace PortaCapena.Authentication.NetCore
 {
@@ -17,7 +18,7 @@ namespace PortaCapena.Authentication.NetCore
             Next = next;
         }
 
-        public virtual async Task Invoke(HttpContext context)
+        public virtual async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
         {
             HttpContext = context;
 

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using PortaCapena.Authentication.NetCore;
+﻿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using PortaCapena.Authentication.NetCore;
 
-namespace NetCoreSample.Middlewares
+namespace NetCore.AuthSample.Middlewares
 {
     //Optional
     public class MyIdentityMiddleware : PcIdentityMiddleware
@@ -18,9 +19,9 @@ namespace NetCoreSample.Middlewares
             return base.RefreshTokenAsync(newToken);
         }
 
-        public override Task Invoke(HttpContext context)
+        public override Task Invoke(HttpContext context, IServiceProvider serviceProvider)
         {
-            return base.Invoke(context);
+            return base.Invoke(context, serviceProvider);
         }
 
         public override Task SetClaimsPrincipalAsync(ClaimsPrincipal principal)

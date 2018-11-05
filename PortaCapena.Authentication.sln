@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortaCapena.Authentication.Core", "PortaCapena.Authentication.Core\PortaCapena.Authentication.Core.csproj", "{684AE8CE-B5EB-47AA-8FFB-8D0C002FE31E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortaCapena.Authentication.Net", "PortaCapena.Authentication.Net\PortaCapena.Authentication.Net.csproj", "{3C1ED600-92AC-43DE-8FAF-EF65EAB26FDF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortaCapena.Authentication.NetCore", "PortaCapena.Authentication.NetCore\PortaCapena.Authentication.NetCore.csproj", "{393225C2-776D-4F8A-977E-02BF4005BC11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{96D46B00-95DD-41E1-A0F4-13834A5A35A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.AuthSample", "Samples\NetCore.AuthSample\NetCore.AuthSample.csproj", "{7F532680-881C-4C80-8806-3844F6762501}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetWebApi.AuthSample", "Samples\NetWebApi.AuthSample\NetWebApi.AuthSample.csproj", "{02406E76-473C-4B84-AA6A-8D557065351D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{684AE8CE-B5EB-47AA-8FFB-8D0C002FE31E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{684AE8CE-B5EB-47AA-8FFB-8D0C002FE31E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{684AE8CE-B5EB-47AA-8FFB-8D0C002FE31E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{684AE8CE-B5EB-47AA-8FFB-8D0C002FE31E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C1ED600-92AC-43DE-8FAF-EF65EAB26FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C1ED600-92AC-43DE-8FAF-EF65EAB26FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C1ED600-92AC-43DE-8FAF-EF65EAB26FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C1ED600-92AC-43DE-8FAF-EF65EAB26FDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,17 +23,12 @@ Global
 		{7F532680-881C-4C80-8806-3844F6762501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F532680-881C-4C80-8806-3844F6762501}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F532680-881C-4C80-8806-3844F6762501}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02406E76-473C-4B84-AA6A-8D557065351D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02406E76-473C-4B84-AA6A-8D557065351D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02406E76-473C-4B84-AA6A-8D557065351D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02406E76-473C-4B84-AA6A-8D557065351D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7F532680-881C-4C80-8806-3844F6762501} = {96D46B00-95DD-41E1-A0F4-13834A5A35A9}
-		{02406E76-473C-4B84-AA6A-8D557065351D} = {96D46B00-95DD-41E1-A0F4-13834A5A35A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ACCC1D9-A7C8-4C00-8CDD-3C7F860DD7A8}
