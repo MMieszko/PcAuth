@@ -5,7 +5,7 @@ using PortaCapena.Authentication.NetCore.Abstraction;
 namespace PortaCapena.Authentication.NetCore
 {
     public class PcIdentityRequirement<TRole> : IAuthorizationRequirement
-        where TRole : Role
+        where TRole : Role, new()
     {
         public TRole Role { get; }
 

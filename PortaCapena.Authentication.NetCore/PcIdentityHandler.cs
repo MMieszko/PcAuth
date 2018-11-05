@@ -7,7 +7,7 @@ using PortaCapena.Authentication.NetCore.Extensions;
 namespace PortaCapena.Authentication.NetCore
 {
     public class PcIdentityHandler<TRole> : AuthorizationHandler<PcIdentityRequirement<TRole>>, ITokenValidator
-        where TRole : Role
+        where TRole : Role, new()
     {
         protected AuthorizationHandlerContext AuthContext { get; private set; }
 

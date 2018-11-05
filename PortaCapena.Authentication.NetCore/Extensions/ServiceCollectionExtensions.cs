@@ -21,7 +21,7 @@ namespace PortaCapena.Authentication.NetCore
         /// <param name="name">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
         /// <returns><see cref="IServiceCollection"/></returns>
         public static IServiceCollection SetIdentityRequirements<TRole, TRequirement, THandler>(this IServiceCollection @this, string name)
-            where TRole : Role
+            where TRole : Role, new()
             where TRequirement : PcIdentityRequirement<TRole>
             where THandler : PcIdentityHandler<TRole>
         {
