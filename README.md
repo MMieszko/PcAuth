@@ -1,6 +1,6 @@
 # PcAuth
 
-### Quickstart - .NET Core
+### Quickstart -
 
 Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
 
@@ -65,7 +65,7 @@ The last step is handling unauthorize exception. This can be omitted if you have
             });
 ```
 
-### Customizing - .NET Core
+### Customizing
 
 You can define custom middleware deriving from **PcIdentityMiddleware**
 There are two method available to override:
@@ -86,14 +86,3 @@ The method is responsible to decide if given principals in middleware are valid 
 * OnUnauthorizedAsync
 
 The method is called when process from above method failed due to wrong role. The method throws **AuthException**.
-
-
-### Quickstart - .NET Framework
-
-To be added.
-
-### Customizing - .NET Framework
-
-To be added.
-
-
