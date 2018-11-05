@@ -1,4 +1,4 @@
-﻿namespace PortaCapena.Authentication.NetCore
+﻿namespace PortaCapena.Authentication.NetCore.Abstraction
 {
     public abstract class Role
     {

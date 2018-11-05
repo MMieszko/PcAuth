@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using PortaCapena.Authentication.NetCore.Abstraction;
 
 namespace PortaCapena.Authentication.NetCore
 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetCore.AuthSample.Auth;
+using PortaCapena.Authentication.NetCore;
 
 namespace NetCore.AuthSample.Controllers
 {
@@ -15,6 +16,17 @@ namespace NetCore.AuthSample.Controllers
         {
             var uid = HttpContext.Items["UserId"];
             return new string[] { "value1", "value2" };
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("create")]
+        public string GenerateToken()
+        {
+            var token = TokenManager.Create(1, new AdminRole(), new KeyValuePair<string, string>("Dzwig", "Tak"));
+
+            var claimsPrincipal = TokenManager.Read(token);
+
+            return token;
         }
     }
 }

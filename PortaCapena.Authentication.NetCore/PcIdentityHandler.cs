@@ -30,10 +30,7 @@ namespace PortaCapena.Authentication.NetCore
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Throws <see cref="AuthException"/> with given message
-        /// </summary>
-        /// <param name="message">Exception message</param>
+        /// <inheritdoc />
         public virtual Task OnUnauthorizedAsync(string message)
         {
             throw new AuthException(message);

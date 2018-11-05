@@ -64,7 +64,5 @@ namespace PortaCapena.Authentication.NetCore.Configuration
 
             return _tokenOptions;
         }
-
-
     }
 }

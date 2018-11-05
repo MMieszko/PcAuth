@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using PortaCapena.Authentication.NetCore.Abstraction;
 
 namespace PortaCapena.Authentication.NetCore
 {
@@ -27,6 +28,7 @@ namespace PortaCapena.Authentication.NetCore
             try
             {
                 principal = handler.ValidateToken(token, TokenValidationParamers, out var validToken);
+
                 if (!(validToken is JwtSecurityToken))
                     throw new AuthException("Given token is not valid");
             }
@@ -34,14 +36,14 @@ namespace PortaCapena.Authentication.NetCore
             {
                 throw new AuthException(ex.Message, ex);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new AuthException("Unexpected exception while trying to read token. See inner exception for more details", ex);
             }
 
             return principal;
         }
-       
+
         /// <summary>
         /// Creates token for given userId and roles
         /// </summary>
@@ -50,13 +52,21 @@ namespace PortaCapena.Authentication.NetCore
         /// <returns>Jwt Token</returns>
         public static string Create(object userId, params Role[] roles)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(Claims.UserId, userId.ToString()),
-                new Claim(Claims.Role, string.Join(",", roles.ToList()))
-            };
+            var claims = CreateDefaultClaims(userId, roles);
 
             return Create(claims);
+        }
+
+        /// <summary>
+        /// Creates token for given userId and role
+        /// </summary>
+        /// <param name="userId">User id</param>
+        /// <param name="role">Role saved in token</param>
+        /// <param name="keyValuePairs">Collection key pair values saved in tokenn</param>
+        /// <returns>Jwt Token</returns>
+        public static string Create(object userId, Role role, params KeyValuePair<string, string>[] keyValuePairs)
+        {
+            return Create(userId, new[] { role }, keyValuePairs);
         }
 
         /// <summary>
@@ -64,16 +74,16 @@ namespace PortaCapena.Authentication.NetCore
         /// </summary>
         /// <param name="userId">User id</param>
         /// <param name="roles">Collection of roles saved in token</param>
-        /// <returns>Jwt token</returns>
-        public static string Create(object userId, params string[] roles)
+        /// <param name="keyValuePairs">Collection key pair values saved in tokenn</param>
+        /// <returns>Jwt Token</returns>
+        public static string Create(object userId, Role[] roles, params KeyValuePair<string, string>[] keyValuePairs)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(Claims.UserId, userId.ToString()),
-                new Claim(Claims.Role, string.Join(",", roles.ToList()))
-            };
+            var defaultClaims = CreateDefaultClaims(userId, roles).ToList();
+            var additionalClaims = CreateClaims(keyValuePairs).ToList();
 
-            return Create(claims);
+            defaultClaims.AddRange(additionalClaims);
+
+            return Create(defaultClaims);
         }
 
         /// <summary>
@@ -86,6 +96,22 @@ namespace PortaCapena.Authentication.NetCore
             var jwt = new JwtSecurityToken(null, null, claims, DateTime.UtcNow, DateTime.UtcNow.Add(TokenOptions.Expiration), TokenOptions.SigningCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
+        private static Claim[] CreateDefaultClaims(object userId, params Role[] roles)
+        {
+            var claims = new[]
+            {
+                new Claim(Claims.UserId, userId.ToString()),
+                new Claim(Claims.Role, string.Join(",", roles.ToList()))
+            };
+
+            return claims;
+        }
+
+        private static Claim[] CreateClaims(IEnumerable<KeyValuePair<string, string>> keyPairValues)
+        {
+            return keyPairValues.Select(keyPair => new Claim(keyPair.Key, keyPair.Value)).ToArray();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System;
+using PortaCapena.Authentication.NetCore.Abstraction;
 
 namespace PortaCapena.Authentication.NetCore
 {
