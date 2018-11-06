@@ -24,9 +24,9 @@ namespace NetCore.AuthSample.Middlewares
             return base.Invoke(context, serviceProvider);
         }
 
-        public override Task SetClaimsPrincipalAsync(ClaimsPrincipal principal)
+        public override Task FillHttpContextWithIdentity(ClaimsPrincipal principal)
         {
-            return base.SetClaimsPrincipalAsync(principal);
+            return base.FillHttpContextWithIdentity(principal);
         }
     }
 }

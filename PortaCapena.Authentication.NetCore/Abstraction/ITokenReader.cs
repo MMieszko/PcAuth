@@ -10,6 +10,6 @@ namespace PortaCapena.Authentication.NetCore.Abstraction
         /// Also sets <see cref="Claims.UserId"/> claim into <see cref="HttpContext.Items"/> as UserId key/>
         /// </summary>
         /// <param name="principal">Current usser principals</param>
-        Task SetClaimsPrincipalAsync(ClaimsPrincipal principal);
+        Task FillHttpContextWithIdentity(ClaimsPrincipal principal);
     }
 }

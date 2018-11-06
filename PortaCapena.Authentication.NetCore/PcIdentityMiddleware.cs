@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace PortaCapena.Authentication.NetCore
 {
     public class PcIdentityMiddleware : ITokenReader, ITokenRefresher
     {
+        protected IServiceProvider ServiceProvider { get; private set; }
         protected HttpContext HttpContext { get; private set; }
         protected RequestDelegate Next { get; }
 
@@ -20,6 +22,7 @@ namespace PortaCapena.Authentication.NetCore
 
         public virtual async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
         {
+            ServiceProvider = serviceProvider;
             HttpContext = context;
 
             var token = context.Request.Headers[TokenManager.TokenOptions.TokenName];
@@ -47,12 +50,17 @@ namespace PortaCapena.Authentication.NetCore
                 throw new Exception("Unexpected error while trying to read token", ex);
             }
 
-            await SetClaimsPrincipalAsync(claimsPrinicipal);
+            await FillHttpContextWithIdentity(claimsPrinicipal);
             await Next(context);
 
             if (!TokenManager.TokenOptions.AutoRefresh) return;
 
-            await RefreshTokenAsync(TokenManager.Create(claimsPrinicipal.Claims));
+            await RefreshTokenAsync(await CreateRefreshedToken(claimsPrinicipal.Claims));
+        }
+
+        protected virtual Task<string> CreateRefreshedToken(IEnumerable<Claim> claimsPrincipal)
+        {
+            return Task.FromResult(TokenManager.Create(claimsPrincipal));
         }
 
         /// <summary>
@@ -60,7 +68,7 @@ namespace PortaCapena.Authentication.NetCore
         /// Also sets <see cref="Claims.UserId"/> claim into <see cref="HttpContext.Items"/> as UserId key/>
         /// </summary>
         /// <param name="principal">Current usser principals</param>
-        public virtual Task SetClaimsPrincipalAsync(ClaimsPrincipal principal)
+        public virtual Task FillHttpContextWithIdentity(ClaimsPrincipal principal)
         {
             HttpContext.User = principal;
             HttpContext.Items["UserId"] = principal.Claims.GetUserIdValue();
