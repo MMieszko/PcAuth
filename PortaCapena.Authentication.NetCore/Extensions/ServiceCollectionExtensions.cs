@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Exceptions;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Extensions
 {
     public static class ServiceCollectionExtensions
     {
         /// <summary>
         /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
         /// </summary>
-        /// <typeparam name="TRole">Role must inheret <see cref="Role"/></typeparam>
-        /// <typeparam name="TRequirement">Requirement must inheret <see cref="PcIdentityRequirement{TRole}"/></typeparam>
-        /// <typeparam name="THandler">Authorization handler must inheret<see cref="PcIdentityHandler{TRole}"/></typeparam>
+        /// <typeparam name="TRole">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="TRequirement">Requirement must inherit <see cref="PcIdentityRequirement{TRole}"/></typeparam>
+        /// <typeparam name="THandler">Authorization handler must inherit<see cref="PcIdentityHandler{TRole}"/></typeparam>
         /// <param name="this"><see cref="IServiceCollection"/></param>
         /// <param name="name">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
         /// <returns><see cref="IServiceCollection"/></returns>
@@ -53,7 +55,7 @@ namespace PortaCapena.Authentication.NetCore
         }
 
         /// <summary>
-        /// Adds annymous middleware into the pipelile with handle the exception with typeof <see cref="AuthException"/>
+        /// Adds anonymous middleware into the pipeline with handle the exception with typeof <see cref="AuthException"/>
         /// </summary>
         /// <param name="this">IApplicationBuilder</param>
         /// <param name="func">Delegate to handle the exception</param>

@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.IdentityModel.Tokens;
+using PortaCapena.Authentication.NetCore.Configuration;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Abstraction
 {
     public interface ITokenOptionsBuilder
     {

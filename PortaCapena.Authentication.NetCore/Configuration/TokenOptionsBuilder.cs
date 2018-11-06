@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using PortaCapena.Authentication.NetCore.Abstraction;
 
 namespace PortaCapena.Authentication.NetCore.Configuration
 {

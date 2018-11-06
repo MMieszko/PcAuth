@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Exceptions
 {
     public class AuthException : Exception
     {

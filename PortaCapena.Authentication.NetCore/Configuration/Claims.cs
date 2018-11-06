@@ -1,4 +1,4 @@
-﻿namespace PortaCapena.Authentication.NetCore
+﻿namespace PortaCapena.Authentication.NetCore.Configuration
 {
     public static class Claims
     {

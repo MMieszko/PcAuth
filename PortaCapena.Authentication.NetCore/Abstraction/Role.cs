@@ -3,7 +3,7 @@
     public abstract class Role
     {
         /// <summary>
-        /// Value that represnets the role
+        /// Value that represents the role
         /// </summary>
         public abstract object Value { get; }
                         

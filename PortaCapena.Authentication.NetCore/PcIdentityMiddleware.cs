@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Net;
 using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Exceptions;
 using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace PortaCapena.Authentication.NetCore
@@ -67,7 +69,7 @@ namespace PortaCapena.Authentication.NetCore
         /// Sets given <see cref="ClaimsPrincipal" into <see cref="HttpContext.User"/>
         /// Also sets <see cref="Claims.UserId"/> claim into <see cref="HttpContext.Items"/> as UserId key/>
         /// </summary>
-        /// <param name="principal">Current usser principals</param>
+        /// <param name="principal">Current user principals</param>
         public virtual Task FillHttpContextWithIdentity(ClaimsPrincipal principal)
         {
             HttpContext.User = principal;

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Security.Claims;
 using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Configuration;
 
 namespace PortaCapena.Authentication.NetCore.Extensions
 {
     public static class ClaimExtensions
     {
         /// <summary>
-        /// Retrive <see cref="Claims.Role"/> values from given collection of claims
+        /// Retrieve <see cref="Claims.Role"/> values from given collection of claims
         /// </summary>
         /// <param name="this">Collection of <see cref="Claim"/></param>
         /// <returns>String value from <see cref="Role"/></returns>
@@ -18,7 +19,7 @@ namespace PortaCapena.Authentication.NetCore.Extensions
         }
 
         /// <summary>
-        /// Retrive <see cref="Claims.UserId"/> value from given collection of claims
+        /// Retrieve <see cref="Claims.UserId"/> value from given collection of claims
         /// </summary>
         /// <param name="this">Collection of <see cref="Claim"/></param>
         /// <returns>String value from <see cref="Role"/></returns>

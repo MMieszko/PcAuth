@@ -5,6 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using PortaCapena.Authentication.NetCore.Abstraction;
+using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Exceptions;
 
 namespace PortaCapena.Authentication.NetCore
 {

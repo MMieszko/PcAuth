@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCore.AuthSample.Auth;
 using PortaCapena.Authentication.NetCore;
 using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace NetCore.AuthSample
 {

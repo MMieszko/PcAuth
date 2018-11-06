@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PortaCapena.Authentication.NetCore.Exceptions;
 
 namespace PortaCapena.Authentication.NetCore.Abstraction
 {

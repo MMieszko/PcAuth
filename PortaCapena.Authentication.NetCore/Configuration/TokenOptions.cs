@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Configuration
 {
     public class TokenOptions
     {
