@@ -20,7 +20,6 @@
 	</metadata>
 	<files>
 		<file src="bin\Debug\netstandard2.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll" target="lib"/>
-		<file src="bin\Debug\netstandard2.0\PortaCapena.Authentication.Core.dll" target="lib"/>
 		<file src="bin\Debug\netstandard2.0\PortaCapena.Authentication.NetCore.dll" target="lib"/>
 	</files>
 </package>
