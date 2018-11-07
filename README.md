@@ -1,6 +1,6 @@
 # PcAuth
 
-### Quickstart -
+### Quickstart
 
 Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
 
