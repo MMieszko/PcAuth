@@ -4,7 +4,7 @@
 
 Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
 
-> Install-Package PortaCapena.Authentication.NetCore -Version 1.2.1
+> Install-Package PortaCapena.Authentication.NetCore -Version 2.0.1
 
 
 As the authorization is based on roles first we have to define roles, requirement and handler i.e:
