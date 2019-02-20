@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Core;
 
 namespace PortaCapena.Authentication.NetCore.Abstraction
 {

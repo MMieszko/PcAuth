@@ -8,11 +8,11 @@ using PortaCapena.Authentication.NetCore.Abstraction;
 using PortaCapena.Authentication.NetCore.Configuration;
 using PortaCapena.Authentication.NetCore.Exceptions;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Core
 {
     public static class TokenManager
     {
-        internal static TokenValidationParameters TokenValidationParamers { get; set; }
+        internal static TokenValidationParameters TokenValidationParameters { get; set; }
 
         /// <summary>
         /// TokenOptions created using <see cref="ITokenOptionsBuilder"/>
@@ -29,7 +29,7 @@ namespace PortaCapena.Authentication.NetCore
 
             try
             {
-                principal = handler.ValidateToken(token, TokenValidationParamers, out var validToken);
+                principal = handler.ValidateToken(token, TokenValidationParameters, out var validToken);
 
                 if (!(validToken is JwtSecurityToken))
                     throw new AuthException("Given token is not valid");
@@ -98,6 +98,23 @@ namespace PortaCapena.Authentication.NetCore
             var jwt = new JwtSecurityToken(null, null, claims, DateTime.UtcNow, DateTime.UtcNow.Add(TokenOptions.Expiration), TokenOptions.SigningCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
+        public static bool IsTokenExpired(string token)
+        {
+            try
+            {
+                new JwtSecurityTokenHandler().ValidateToken(token, TokenValidationParameters, out var validToken);
+
+                if (!(validToken is JwtSecurityToken))
+                    return false;
+            }
+            catch (SecurityTokenValidationException ex)
+            {
+                throw new AuthException(ex.Message, ex);
+            }
+
+            return true;
         }
 
         private static Claim[] CreateDefaultClaims(object userId, params Role[] roles)

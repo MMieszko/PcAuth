@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using PortaCapena.Authentication.NetCore.Abstraction;
 using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Core;
 
 namespace PortaCapena.Authentication.NetCore.Extensions
 {

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using PortaCapena.Authentication.NetCore.Abstraction;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Core
 {
     public class PcIdentityRequirement<TRole> : IAuthorizationRequirement
         where TRole : Role, new()

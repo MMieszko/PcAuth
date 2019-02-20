@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCore.AuthSample.Auth;
-using PortaCapena.Authentication.NetCore;
 using PortaCapena.Authentication.NetCore.Configuration;
+using PortaCapena.Authentication.NetCore.Core;
 using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace NetCore.AuthSample
@@ -26,11 +26,12 @@ namespace NetCore.AuthSample
         {
             services.AddCors();
 
-            ///With own classes
+            //With own classes
             //services.SetIdentityRequirements<AdminRole, PcIdentityRequirement<AdminRole>, PcIdentityHandler<AdminRole>>(nameof(AdminRequirement));
 
-            ///Built in classes
-            services.SetIdentityRequirements<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement));
+            //Built in classes
+            services.AddPcIdentityPolicy<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement))
+                    .AddDefaultPcIdentity();
 
             services.AddMvc();
 
@@ -46,8 +47,8 @@ namespace NetCore.AuthSample
 
             
 
-            ///Built in
-            app.SetIdentityMiddleware<PcIdentityMiddleware>(new TokenOptionsBuilder().SetTokenName("access_token")
+            //Built in
+            app.UsePcIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")
                                                         .SetSecretKey("this is my custom Secret key for authnetication")
                                                         .SetExpiration(TimeSpan.FromMinutes(15))
                                                         .SetAutoRefresh(false)
@@ -56,10 +57,10 @@ namespace NetCore.AuthSample
 
             app.UseCors(config => config.WithHeaders(TokenManager.TokenOptions.ExchangeTokenName).AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
-            ///Custom
-            //app.SetIdentityMiddleware<MyIdentityMiddleware>(tokenOptions);
+            //Custom
+            //app.UsePcIdentityMiddleware<MyIdentityMiddleware>(tokenOptions);
 
-            app.HandleAuthException(async (ctx, exc) =>
+            app.UsePcIdentityExceptionHandler(async (ctx, exc) =>
             {
                 ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await ctx.Response.WriteAsync(exc.Message);

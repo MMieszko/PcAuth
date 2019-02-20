@@ -3,15 +3,15 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using PortaCapena.Authentication.NetCore.Configuration;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Core
 {
-    public static class PcAuthInitializer
+    internal static class PcAuthInitializer
     {
         public static void Initialize(TokenOptions tokenOptions)
         {
             TokenManager.TokenOptions = tokenOptions;
 
-            TokenManager.TokenValidationParamers = new TokenValidationParameters
+            TokenManager.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenOptions.SecretKey)),

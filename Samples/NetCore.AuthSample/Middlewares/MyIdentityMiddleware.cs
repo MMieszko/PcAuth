@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using PortaCapena.Authentication.NetCore;
+using PortaCapena.Authentication.NetCore.Core;
 
 namespace NetCore.AuthSample.Middlewares
 {

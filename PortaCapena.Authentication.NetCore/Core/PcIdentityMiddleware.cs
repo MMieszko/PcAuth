@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using PortaCapena.Authentication.NetCore.Abstraction;
-using PortaCapena.Authentication.NetCore.Configuration;
 using PortaCapena.Authentication.NetCore.Exceptions;
 using PortaCapena.Authentication.NetCore.Extensions;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Core
 {
     public class PcIdentityMiddleware : ITokenReader, ITokenRefresher
     {
@@ -35,16 +34,17 @@ namespace PortaCapena.Authentication.NetCore
                 return;
             }
 
-            ClaimsPrincipal claimsPrinicipal;
+            ClaimsPrincipal claimsPrincipal;
 
             try
             {
-                claimsPrinicipal = TokenManager.Read(token);
+                claimsPrincipal = TokenManager.Read(token);
             }
             catch (AuthException ex)
             {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await HttpContext.Response.WriteAsync("Unauthorized." + ex.Message);
+
                 return;
             }
             catch (Exception ex)
@@ -52,12 +52,12 @@ namespace PortaCapena.Authentication.NetCore
                 throw new Exception("Unexpected error while trying to read token", ex);
             }
 
-            await FillHttpContextWithIdentity(claimsPrinicipal);
+            await FillHttpContextWithIdentity(claimsPrincipal);
             await Next(context);
 
             if (!TokenManager.TokenOptions.AutoRefresh) return;
 
-            await RefreshTokenAsync(await CreateRefreshedToken(claimsPrinicipal.Claims));
+            await RefreshTokenAsync(await CreateRefreshedToken(claimsPrincipal.Claims));
         }
 
         protected virtual Task<string> CreateRefreshedToken(IEnumerable<Claim> claimsPrincipal)

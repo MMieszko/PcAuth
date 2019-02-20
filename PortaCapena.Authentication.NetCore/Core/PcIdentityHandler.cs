@@ -5,7 +5,7 @@ using PortaCapena.Authentication.NetCore.Abstraction;
 using PortaCapena.Authentication.NetCore.Exceptions;
 using PortaCapena.Authentication.NetCore.Extensions;
 
-namespace PortaCapena.Authentication.NetCore
+namespace PortaCapena.Authentication.NetCore.Core
 {
     public class PcIdentityHandler<TRole> : AuthorizationHandler<PcIdentityRequirement<TRole>>, ITokenValidator
         where TRole : Role, new()
@@ -24,7 +24,7 @@ namespace PortaCapena.Authentication.NetCore
             var roles = roleValues.Split(',');
 
             if (roles.All(x => x != requirement.Role.ToString()))
-                return OnUnauthorizedAsync($"Not found {requirement.Role.ToString()} in current user roles");
+                return OnUnauthorizedAsync($"Not found {requirement.Role} in current user roles");
 
             context.Succeed(requirement);
 
