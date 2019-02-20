@@ -16,25 +16,26 @@ namespace PortaCapena.Authentication.NetCore.Core
         {
             AuthContext = context;
 
-            var roleValues = context.User.Claims.GetRoleValues();
+            var roleValues = context.User.Claims.GetRolesArray();
 
-            if (string.IsNullOrEmpty(roleValues))
-                return OnUnauthorizedAsync("No roles found for given token");
+            if (roleValues == null)
+                return OnUnauthorizedAsync(new UnauthorizedException("Unauthorized for given operation"));
 
-            var roles = roleValues.Split(',');
-
-            if (roles.All(x => x != requirement.Role.ToString()))
-                return OnUnauthorizedAsync($"Not found {requirement.Role} in current user roles");
+            if (roleValues.All(x => x != requirement.Role.ToString()))
+                return OnUnauthorizedAsync(new UnauthorizedException("Unauthorized for given operation"));
 
             context.Succeed(requirement);
 
             return Task.CompletedTask;
         }
 
-        /// <inheritdoc />
-        public virtual Task OnUnauthorizedAsync(string message)
+        /// <summary>
+        /// Throws <see cref="AuthException"/> with provided message
+        /// </summary>
+        /// <param name="message">Exception message</param>
+        public virtual Task OnUnauthorizedAsync(AuthException exception)
         {
-            throw new AuthException(message);
+            throw exception;
         }
     }
 }

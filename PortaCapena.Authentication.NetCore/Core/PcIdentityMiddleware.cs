@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using PortaCapena.Authentication.NetCore.Abstraction;
 using PortaCapena.Authentication.NetCore.Exceptions;
@@ -23,8 +24,8 @@ namespace PortaCapena.Authentication.NetCore.Core
 
         public virtual async Task Invoke(HttpContext context, IServiceProvider serviceProvider)
         {
-            ServiceProvider = serviceProvider;
-            HttpContext = context;
+            this.ServiceProvider = serviceProvider;
+            this.HttpContext = context;
 
             var token = context.Request.Headers[TokenManager.TokenOptions.TokenName];
 
@@ -33,7 +34,7 @@ namespace PortaCapena.Authentication.NetCore.Core
                 await Next(context);
                 return;
             }
-
+            
             ClaimsPrincipal claimsPrincipal;
 
             try
@@ -43,7 +44,7 @@ namespace PortaCapena.Authentication.NetCore.Core
             catch (AuthException ex)
             {
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                await HttpContext.Response.WriteAsync("Unauthorized." + ex.Message);
+                await HttpContext.Response.WriteAsync("Unauthorized - " + ex.Message);
 
                 return;
             }
@@ -66,14 +67,14 @@ namespace PortaCapena.Authentication.NetCore.Core
         }
 
         /// <summary>
-        /// Sets given <see cref="ClaimsPrincipal" into <see cref="HttpContext.User"/>
+        /// Sets given <see cref="ClaimsPrincipal"/> into <see cref="HttpContext.User"/>
         /// Also sets <see cref="Claims.UserId"/> claim into <see cref="HttpContext.Items"/> as UserId key/>
         /// </summary>
         /// <param name="principal">Current user principals</param>
         public virtual Task FillHttpContextWithIdentity(ClaimsPrincipal principal)
         {
             HttpContext.User = principal;
-            HttpContext.Items["UserId"] = principal.Claims.GetUserIdValue();
+            HttpContext.Items[Constants.UserId] = principal.Claims.GetUserIdValue();
 
             return Task.CompletedTask;
         }

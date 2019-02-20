@@ -23,12 +23,12 @@ namespace PortaCapena.Authentication.NetCore.Extensions
         /// </summary>
         /// <param name="this"></param>
         /// <returns></returns>
-        public static IServiceCollection AddDefaultPcIdentity(this IServiceCollection @this)
+        public static IServiceCollection AddDefaultPcIdentityPolicy(this IServiceCollection @this)
         {
             var defaultPolicy = PcDefaultPolicy.Create;
 
             @this.AddScoped<IAuthorizationHandler, DefaultAuthorizationHandler>();
-            @this.AddAuthorization(options => options.AddPolicy(Constans.DefaultPolicyName, defaultPolicy));
+            @this.AddAuthorization(options => options.AddPolicy(Constants.DefaultPolicyName, defaultPolicy));
 
             return @this;
         }
@@ -55,6 +55,21 @@ namespace PortaCapena.Authentication.NetCore.Extensions
                 @this.AddScoped<IAuthorizationHandler, THandler>();
             else
                 @this.AddSingleton<IAuthorizationHandler, THandler>();
+
+            @this.AddAuthorization(options => options.AddPolicy(policyName, policy => policy.Requirements.Add(requirement)));
+
+            return @this;
+        }
+
+        public static IServiceCollection AddPcIdentityPolicy<TRole>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where TRole : Role, new()
+        {
+            var requirement = new PcIdentityRequirement<TRole>();
+
+            if (injectionType == AuthorizationHandlerInjectionType.Scoped)
+                @this.AddScoped<IAuthorizationHandler, PcIdentityHandler<TRole>>();
+            else
+                @this.AddSingleton<IAuthorizationHandler, PcIdentityHandler<TRole>>();
 
             @this.AddAuthorization(options => options.AddPolicy(policyName, policy => policy.Requirements.Add(requirement)));
 
@@ -97,8 +112,7 @@ namespace PortaCapena.Authentication.NetCore.Extensions
 
             return @this;
         }
-
-
+        
         #region - Depracated -
 
         [Obsolete("Instead use AddPcIdentityPolicy extension method")]
@@ -124,6 +138,5 @@ namespace PortaCapena.Authentication.NetCore.Extensions
         }
 
         #endregion
-
     }
 }

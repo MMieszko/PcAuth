@@ -11,6 +11,6 @@ namespace PortaCapena.Authentication.NetCore.Core
         {
         }
 
-        public static PcDefaultPolicy Create => new PcDefaultPolicy(new[] { new PcDefaultAuthorizationRequirement() }, new[] { Constans.DefaultAuthorizationScheme });
+        public static PcDefaultPolicy Create => new PcDefaultPolicy(new[] { new PcDefaultAuthorizationRequirement() }, new[] { Constants.DefaultAuthorizationScheme });
     }
 }

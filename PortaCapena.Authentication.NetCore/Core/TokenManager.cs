@@ -30,9 +30,13 @@ namespace PortaCapena.Authentication.NetCore.Core
             try
             {
                 principal = handler.ValidateToken(token, TokenValidationParameters, out var validToken);
-
+                
                 if (!(validToken is JwtSecurityToken))
                     throw new AuthException("Given token is not valid");
+            }
+            catch (SecurityTokenExpiredException ex)
+            {
+                throw new AuthException("Token expired", ex);
             }
             catch (SecurityTokenValidationException ex)
             {
@@ -98,23 +102,6 @@ namespace PortaCapena.Authentication.NetCore.Core
             var jwt = new JwtSecurityToken(null, null, claims, DateTime.UtcNow, DateTime.UtcNow.Add(TokenOptions.Expiration), TokenOptions.SigningCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
-        }
-
-        public static bool IsTokenExpired(string token)
-        {
-            try
-            {
-                new JwtSecurityTokenHandler().ValidateToken(token, TokenValidationParameters, out var validToken);
-
-                if (!(validToken is JwtSecurityToken))
-                    return false;
-            }
-            catch (SecurityTokenValidationException ex)
-            {
-                throw new AuthException(ex.Message, ex);
-            }
-
-            return true;
         }
 
         private static Claim[] CreateDefaultClaims(object userId, params Role[] roles)

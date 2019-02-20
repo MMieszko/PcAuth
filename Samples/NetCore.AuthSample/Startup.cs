@@ -26,12 +26,18 @@ namespace NetCore.AuthSample
         {
             services.AddCors();
 
+            //With just role
+            services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
+                    .AddPcIdentityPolicy<UserRole>("UserPolicy")
+                    .AddDefaultPcIdentityPolicy();
+
             //With own classes
-            //services.SetIdentityRequirements<AdminRole, PcIdentityRequirement<AdminRole>, PcIdentityHandler<AdminRole>>(nameof(AdminRequirement));
+            //services.AddPcIdentityPolicy<AdminRole, PcIdentityRequirement<AdminRole>, PcIdentityHandler<AdminRole>>(nameof(AdminRequirement))
+            //        .AddDefaultPcIdentityPolicy();
 
             //Built in classes
-            services.AddPcIdentityPolicy<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement))
-                    .AddDefaultPcIdentity();
+            //services.AddPcIdentityPolicy<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement))
+            //        .AddDefaultPcIdentity();
 
             services.AddMvc();
 
@@ -45,7 +51,7 @@ namespace NetCore.AuthSample
                 app.UseDeveloperExceptionPage();
             }
 
-            
+
 
             //Built in
             app.UsePcIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")

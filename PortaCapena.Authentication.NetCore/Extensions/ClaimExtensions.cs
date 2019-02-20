@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using PortaCapena.Authentication.NetCore.Abstraction;
-using PortaCapena.Authentication.NetCore.Configuration;
 using PortaCapena.Authentication.NetCore.Core;
 
 namespace PortaCapena.Authentication.NetCore.Extensions
@@ -17,6 +16,23 @@ namespace PortaCapena.Authentication.NetCore.Extensions
         public static string GetRoleValues(this IEnumerable<Claim> @this)
         {
             return @this?.SingleOrDefault(x => x.Type.Contains(Claims.Role))?.Value;
+        }
+
+        /// <summary>
+        /// Retrieve roles values as string array 
+        /// </summary>
+        /// <param name="this">Collection of <see cref="Claim"/></param>
+        /// <returns>Role values as string inside array</returns>
+        public static string[] GetRolesArray(this IEnumerable<Claim> @this)
+        {
+            var values = @this.GetRoleValues();
+
+            if (string.IsNullOrEmpty(values))
+                return null;
+
+            var array = values.Split(',');
+
+            return array;
         }
 
         /// <summary>

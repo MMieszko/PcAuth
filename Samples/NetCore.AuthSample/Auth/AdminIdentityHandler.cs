@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using PortaCapena.Authentication.NetCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using PortaCapena.Authentication.NetCore.Core;
+using PortaCapena.Authentication.NetCore.Exceptions;
 
 namespace NetCore.AuthSample.Auth
 {
@@ -16,9 +13,9 @@ namespace NetCore.AuthSample.Auth
             return base.HandleRequirementAsync(context, requirement);
         }
 
-        public override Task OnUnauthorizedAsync(string message)
+        public override Task OnUnauthorizedAsync(AuthException ex)
         {
-            return base.OnUnauthorizedAsync(message);
+            return base.OnUnauthorizedAsync(ex);
         }
     }
 }
