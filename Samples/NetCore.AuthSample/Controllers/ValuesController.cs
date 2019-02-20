@@ -27,8 +27,10 @@ namespace NetCore.AuthSample.Controllers
         {
             var isInRole1 = User.IsInRole(new AdminRole());
             var isInRole2 = User.IsInRole(1);
+            var userId1 = User.GetUserId();
+            var userId2 = HttpContext.Items[Constants.UserId];
 
-            return $"Is in Role1: {isInRole1} {Environment.NewLine} Is in Role2: {isInRole2}";
+            return $"Is in Role1: {isInRole1} {Environment.NewLine} Is in Role2: {isInRole2} {Environment.NewLine} UserId1: {userId1} {Environment.NewLine} UserId2: {userId2}";
         }
 
         [HttpGet, Route("userreq")]
