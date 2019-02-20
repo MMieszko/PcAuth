@@ -7,7 +7,7 @@ Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authenti
 > Install-Package PortaCapena.Authentication.NetCore -Version 1.2.1
 
 
-As the authentication is based on roles first we have to define roles, requirement and handler i.e:
+As the authorization is based on roles first we have to define roles, requirement and handler i.e:
 
 * Role
 
@@ -20,35 +20,19 @@ As the authentication is based on roles first we have to define roles, requireme
 
     }
  ```
-* Identity handler
-
- ```csharp
-    public class AdminIdentityHandler : PcIdentityHandler<AdminRole>
-    {
-        //base methods can be overriden
-    }
- ```
-
-* Requirement
-
-```csharp
-   public class AdminRequirement : PcIdentityRequirement<AdminRole>
-   {
-   }
-```
-
 Once we have defined the example role its time to register authentication in **Startup.cs** class.
 
 First step is to set IdentityRequirements to *ConfigureServices* method as below. Keep it mind this has to be set before AddMvc() extensions method:
 ```csharp
-services.SetIdentityRequirements<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement));
+services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
+         //can add mulitple poicies for any roles
+        .AddDefaultPcIdentityPolicy();
 ```
 
 Second step is to configure the TokenOptions and regiester identity middleware in **Configure** method as below:
 
 ```csharp
-  app.SetIdentityMiddleware<PcIdentityMiddleware>(new TokenOptionsBuilder()
-                .SetTokenName("access_token")
+  app.SetIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")
                 .SetSecretKey("this is my custom Secret key for authnetication")
                 .SetExpiration(TimeSpan.FromMinutes(15))
                 .SetAutoRefresh(false)
@@ -65,24 +49,100 @@ The last step is handling unauthorize exception. This can be omitted if you have
             });
 ```
 
-### Customizing
+### Usage
 
-You can define custom middleware deriving from **PcIdentityMiddleware**
-There are two method available to override:
-* SetClaimsPrincipalAsync
- 
- This method is called after authentication token was sucesfully validated. As a parameter of the method accepts generated **ClaimsPrincipal** instance. The method body sets HttpContext.User with given claims and insert to HttpContext.Items["UserId"] user id claim.
- 
-* RefreshTokenAsync
+The usage is based on AuthorizeAttribute. The attribute get the policy name as a parameter. The policy is set in Startup.cs for provided role. There is an option to use the attribute without any policy. This means that if request contain valid token then he is automatically authorized execute the method. In order to use attribute without policy remember to use AddDefaultPcIdentityPolicy() while registering policies in Startup.cs
 
-While creating TokenOptions and AutoRefresh is set to true then the method is being executed. As a parameter method accept newly generated token. The method adds new header to the response with name given while building token. 
+There is an example controller which uses 3 different policies:
+-Default
+-Administrator
+-User
 
-You can also override methods when creating role identity handler derived from **PcIdentityHandler**
+```csharp
 
-* HandleRequirementAsync
+    [Authorize]
+    [Route("api/[controller]")]
+    public class ValuesController : Controller
+    {
+        [HttpGet]
+        ///The method is automatically Authorized because controller itslef containg Authroize attribute
+        public IEnumerable<string> Get()
+        {
+            var uid = HttpContext.Items["UserId"];
+            return new string[] { "value1", "value2" };
+        }
+        
+        [HttpGet, Route("adminreq")]
+        [Authorize(Policy = "AdminPolicy")]
+        public string TestAdminRequirement()
+        {
+            return "Succeed"
+        }
 
-The method is responsible to decide if given principals in middleware are valid for current role.
+        [HttpGet, Route("userreq")]
+        [Authorize(Policy = "UserPolicy")]
+        public string TestUserRequirement()
+        {
+            return $"Is in Role1: {isInRole1} {Environment.NewLine} Is in Role2: {isInRole2}";
+        }
 
-* OnUnauthorizedAsync
+        [HttpGet, Route("defaultpolicy")]
+        [Authorize]
+        public string TestDefaultPolicy()
+        {
+            return "Succeed";
+        }
 
-The method is called when process from above method failed due to wrong role. The method throws **AuthException**.
+        [AllowAnonymous]
+        [HttpGet, Route("create/admin")]
+        public string GenerateAdminToken()
+        {
+            var token = TokenManager.Create(1, new AdminRole(), new KeyValuePair<string, string>("Dzwig", "Tak"));
+
+            var claimsPrincipal = TokenManager.Read(token);
+
+            return token;
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("create/user")]
+        ///The method is authorizartion free bcause of [AllowAnnymous] attribute.
+        public string GenerateUserToken()
+        {
+            var token = TokenManager.Create(2, new UserRole(), new KeyValuePair<string, string>("Dzwig", "Tak"));
+
+            var claimsPrincipal = TokenManager.Read(token);
+
+            return token;
+        }
+    }
+
+```
+
+
+### Resolve user role and id in the code
+
+The resolving user can be made in various options:
+
+```csharp
+
+
+    [Route("api/[controller]")]
+    public class ResolveController : Controller
+    {
+        [HttpGet, Route("userreq")]
+        [Authorize(Policy = "UserPolicy")]
+        public string TestUserRequirement()
+        {
+            var isInRole1 = User.IsInRole(new AdminRole());
+            var isInRole2 = User.IsInRole(1);
+            var userId1 = User.GetUserId();
+            var userId2 = HttpContext.Items[Constants.UserId];
+
+            return $"Is in Role1: {isInRole1} {Environment.NewLine} Is in Role2: {isInRole2} {Environment.NewLine} UserId1: {userId1} {Environment.NewLine} UserId2: {userId2}";
+        }
+
+    }
+
+
+```
