@@ -29,14 +29,16 @@ services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
         .AddDefaultPcIdentityPolicy();
 ```
 
-Second step is to configure the TokenOptions and regiester identity middleware in **Configure** method as below:
+Second step is to configure the TokenOptions and regiester identity middleware in **Configure(IApplicationBuilder app, IHostingEnvironment env)** method as below:
 
 ```csharp
-  app.SetIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")
+var tokenOptions = TokenOptionsBuilder.Create("access_token")
                 .SetSecretKey("this is my custom Secret key for authnetication")
                 .SetExpiration(TimeSpan.FromMinutes(15))
                 .SetAutoRefresh(false)
-                .Build());
+                .Build();
+                
+app.UsePcIdentityMiddleware<PcIdentityMiddleware>(tokenOptions);
 ```
 
 The last step is handling unauthorize exception. This can be omitted if you have created your own exception middleware or so:
