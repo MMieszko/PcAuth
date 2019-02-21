@@ -164,5 +164,25 @@ The resolving user can be made in various options:
 
 ### Integration
 
+![alt text](https://raw.githubusercontent.com/MMieszko/PcAuth/master/Usage.png)
+
+Example request using HttpClient:
+
+```csharp
+
+ httpClient = new HttpClient
+ {
+       BaseAddress = new Uri(uri)
+ };
+ 
+ 
+ httpClient.DefaultRequestHeaders.Clear();
+ httpClient.DefaultRequestHeaders.Add("access_token", generatedtoken);
+ 
+ //any usage
+ await httpClient.GetAsync(url);
+ 
+
+```
 
 
