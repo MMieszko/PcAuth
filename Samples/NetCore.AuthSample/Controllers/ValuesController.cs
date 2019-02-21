@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetCore.AuthSample.Auth;
-using PortaCapena.Authentication.NetCore;
 using PortaCapena.Authentication.NetCore.Core;
 using PortaCapena.Authentication.NetCore.Extensions;
 

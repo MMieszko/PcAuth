@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace PortaCapena.Authentication.NetCore.Abstraction
 {
@@ -8,6 +9,7 @@ namespace PortaCapena.Authentication.NetCore.Abstraction
         /// Put given newToken into response header with given exchange token name set in <see cref="ITokenOptionsBuilder"/>
         /// </summary>
         /// <param name="newToken">New generated token</param>
-        Task RefreshTokenAsync(string newToken);
+        /// <param name="httpContext">Current HttpContext</param>
+        Task RefreshTokenAsync(string newToken, HttpContext httpContext);
     }
 }

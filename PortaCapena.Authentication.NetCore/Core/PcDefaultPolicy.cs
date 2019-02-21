@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
-using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace PortaCapena.Authentication.NetCore.Core
 {

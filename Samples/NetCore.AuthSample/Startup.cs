@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -68,7 +67,7 @@ namespace NetCore.AuthSample
 
             app.UsePcIdentityExceptionHandler(async (ctx, exc) =>
             {
-                ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                //ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await ctx.Response.WriteAsync(exc.Message);
 
             });

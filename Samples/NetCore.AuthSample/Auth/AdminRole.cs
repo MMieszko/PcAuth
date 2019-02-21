@@ -1,5 +1,4 @@
-﻿using PortaCapena.Authentication.NetCore;
-using PortaCapena.Authentication.NetCore.Abstraction;
+﻿using PortaCapena.Authentication.NetCore.Abstraction;
 
 namespace NetCore.AuthSample.Auth
 {
