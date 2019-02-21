@@ -4,7 +4,7 @@
 
 Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
 
-> Install-Package PortaCapena.Authentication.NetCore -Version 2.0.1
+> Install-Package PortaCapena.Authentication.NetCore -Version 2.0.2
 
 
 As the authorization is based on roles first we have to define roles, requirement and handler i.e:
@@ -29,14 +29,16 @@ services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
         .AddDefaultPcIdentityPolicy();
 ```
 
-Second step is to configure the TokenOptions and regiester identity middleware in **Configure** method as below:
+Second step is to configure the TokenOptions and regiester identity middleware in **Configure(IApplicationBuilder app, IHostingEnvironment env)** method as below:
 
 ```csharp
-  app.SetIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")
+var tokenOptions = TokenOptionsBuilder.Create("access_token")
                 .SetSecretKey("this is my custom Secret key for authnetication")
                 .SetExpiration(TimeSpan.FromMinutes(15))
                 .SetAutoRefresh(false)
-                .Build());
+                .Build();
+                
+app.UsePcIdentityMiddleware<PcIdentityMiddleware>(tokenOptions);
 ```
 
 The last step is handling unauthorize exception. This can be omitted if you have created your own exception middleware or so:
@@ -48,6 +50,18 @@ The last step is handling unauthorize exception. This can be omitted if you have
 
             });
 ```
+
+
+### Generating tokens
+
+In order to generate token simply use TokenManager class:
+
+```csharp
+
+ string token = TokenManager.Create(126, new AdminRole());
+
+```
+
 
 ### Usage
 
@@ -146,3 +160,9 @@ The resolving user can be made in various options:
 
 
 ```
+
+
+### Integration
+
+
+
