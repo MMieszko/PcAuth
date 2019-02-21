@@ -51,6 +51,18 @@ The last step is handling unauthorize exception. This can be omitted if you have
             });
 ```
 
+
+### Generating tokens
+
+In order to generate token simply use TokenManager class:
+
+```csharp
+
+ string token = TokenManager.Create(126, new AdminRole());
+
+```
+
+
 ### Usage
 
 The usage is based on AuthorizeAttribute. The attribute get the policy name as a parameter. The policy is set in Startup.cs for provided role. There is an option to use the attribute without any policy. This means that if request contain valid token then he is automatically authorized execute the method. In order to use attribute without policy remember to use AddDefaultPcIdentityPolicy() while registering policies in Startup.cs
