@@ -44,5 +44,16 @@ namespace PortaCapena.Authentication.NetCore.Extensions
         {
             return @this?.SingleOrDefault(x => x.Type.Contains(Claims.UserId))?.Value;
         }
+
+        /// <summary>
+        ///Retrieve claim value added while creating token using <see cref="TokenManager"/> Create() method in KeyPairValue parameter
+        /// </summary>
+        /// <param name="this">Collection of <see cref="Claim"/></param>
+        /// <param name="key">Name of key</param>
+        /// <returns>Value of given key</returns>
+        public static string GetAssignedValue(this IEnumerable<Claim> @this, string key)
+        {
+            return @this.SingleOrDefault(x => x.Type == key)?.Value;
+        }
     }
 }

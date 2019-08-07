@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using PortaCapena.Authentication.NetCore.Abstraction;
@@ -8,21 +7,19 @@ using PortaCapena.Authentication.NetCore.Extensions;
 
 namespace PortaCapena.Authentication.NetCore.Core
 {
-    public class PcIdentityHandler<TRole> : AuthorizationHandler<PcIdentityRequirement<TRole>>, ITokenValidator
-        where TRole : Role, new()
+    public class PcMultiIdentityHandler : AuthorizationHandler<PcMultiIdentityRequirement>, ITokenValidator
     {
         protected AuthorizationHandlerContext AuthContext { get; private set; }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PcIdentityRequirement<TRole> requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PcMultiIdentityRequirement requirement)
         {
             AuthContext = context;
+            var claimRoles = context.User.Claims.GetRolesArray();
 
-            var roleValues = context.User.Claims.GetRolesArray();
-
-            if (roleValues == null)
+            if (claimRoles == null)
                 return OnUnauthorizedAsync(new UnauthorizedException("Unauthorized for given operation"));
 
-            if (roleValues.All(x => x != requirement.Role.ToString()))
+            if (!requirement.Roles.Any(role => claimRoles.Contains(role.ToString())))
                 return OnUnauthorizedAsync(new UnauthorizedException("Unauthorized for given operation"));
 
             context.Succeed(requirement);
@@ -30,11 +27,6 @@ namespace PortaCapena.Authentication.NetCore.Core
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Throws <see cref="AuthException"/> with provided message
-        /// </summary>
-        /// <param name="message">Exception message</param>
-        /// <param name="exception">Original exception</param>
         public virtual Task OnUnauthorizedAsync(AuthException exception)
         {
             throw exception;

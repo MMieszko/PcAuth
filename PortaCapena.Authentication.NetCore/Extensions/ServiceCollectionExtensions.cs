@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +32,7 @@ namespace PortaCapena.Authentication.NetCore.Extensions
 
             return @this;
         }
-        
+
         /// <summary>
         /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
         /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
@@ -47,7 +50,7 @@ namespace PortaCapena.Authentication.NetCore.Extensions
             where THandler : PcIdentityHandler<TRole>
         {
             var requirement = Activator.CreateInstance<TRequirement>();
-            
+
             if (injectionType == AuthorizationHandlerInjectionType.Scoped)
                 @this.AddScoped<IAuthorizationHandler, THandler>();
             else
@@ -58,6 +61,16 @@ namespace PortaCapena.Authentication.NetCore.Extensions
             return @this;
         }
 
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        ///         /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="TRole">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        /// <returns><see cref="IServiceCollection"/></returns>
         public static IServiceCollection AddPcIdentityPolicy<TRole>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
             where TRole : Role, new()
         {
@@ -72,7 +85,187 @@ namespace PortaCapena.Authentication.NetCore.Extensions
 
             return @this;
         }
-        
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        ///         /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        /// <returns><see cref="IServiceCollection"/></returns>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        ///         /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        /// <returns><see cref="IServiceCollection"/></returns>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T4">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        /// <returns><see cref="IServiceCollection"/></returns>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3, T4>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+            where T4 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3(), new T4() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T4">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T5">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        /// <returns><see cref="IServiceCollection"/></returns>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3, T4, T5>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+            where T4 : Role, new()
+            where T5 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3(), new T4(), new T5() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T4">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T5">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T6">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3, T4, T5, T6>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+            where T4 : Role, new()
+            where T5 : Role, new()
+            where T6 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3(), new T4(), new T5(), new T6() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T4">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T5">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T6">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T7">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3, T4, T5, T6, T7>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+            where T4 : Role, new()
+            where T5 : Role, new()
+            where T6 : Role, new()
+            where T7 : Role, new()
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3(), new T4(), new T5(), new T6(), new T7() }, injectionType);
+        }
+
+        /// <summary>
+        /// Adds singleton authorization handler into <see cref="IServiceCollection"/> and add policy with given <see cref="PcIdentityRequirement{TRole}"/>/>"/>
+        /// In order to use the policy use <see cref="AuthorizeAttribute"/> with name of policy
+        /// The policy by default check if any of given roles fits the Policy
+        /// </summary>
+        /// <typeparam name="T1">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T2">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T3">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T4">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T5">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T6">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T7">Role must inherit <see cref="Role"/></typeparam>
+        /// <typeparam name="T8">Role must inherit <see cref="Role"/></typeparam>
+        /// <param name="this"><see cref="IServiceCollection"/></param>
+        /// <param name="policyName">Name of policy which is used in <see cref="Authorize"/> as policy parameter</param>
+        /// <param name="injectionType">Registration of given handler in ASP.NET Core DI. By default its scoped</param>
+        public static IServiceCollection AddPcMultiRoleIdentityPolicy<T1, T2, T3, T4, T5, T6, T7, T8>(this IServiceCollection @this, string policyName, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+            where T1 : Role, new()
+            where T2 : Role, new()
+            where T3 : Role, new()
+            where T4 : Role, new()
+            where T5 : Role, new()
+            where T6 : Role, new()
+            where T7 : Role, new()
+            where T8 : Role, new()
+
+        {
+            return AddPcMultiRoleIdentityPolicy(@this, policyName, new List<Role> { new T1(), new T2(), new T3(), new T4(), new T5(), new T6(), new T7(), new T8() }, injectionType);
+        }
+
+        internal static IServiceCollection AddPcMultiRoleIdentityPolicy(this IServiceCollection @this, string policyName, IList<Role> roles, AuthorizationHandlerInjectionType injectionType = AuthorizationHandlerInjectionType.Scoped)
+        {
+            var requirement = new PcMultiIdentityRequirement(roles);
+
+            if (injectionType == AuthorizationHandlerInjectionType.Scoped)
+                @this.AddScoped<IAuthorizationHandler, PcMultiIdentityHandler>();
+            else
+                @this.AddSingleton<IAuthorizationHandler, PcMultiIdentityHandler>();
+
+            @this.AddAuthorization(options => options.AddPolicy(policyName, policy => policy.Requirements.Add(requirement)));
+
+            return @this;
+        }
+
         /// <summary>
         /// Adds given <see cref="PcIdentityMiddleware"/> into the pipeline. Also setup the <see cref="PcAuthInitializer"/> with given token options
         /// </summary>
@@ -109,7 +302,7 @@ namespace PortaCapena.Authentication.NetCore.Extensions
 
             return @this;
         }
-        
+
         #region - Depracated -
 
         [Obsolete("Instead use AddPcIdentityPolicy extension method")]

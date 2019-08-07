@@ -6,9 +6,6 @@ namespace NetCore.AuthSample.Auth
     {
         public override object Value => 10;
 
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
+        public override string ToString() => Value.ToString();
     }
 }

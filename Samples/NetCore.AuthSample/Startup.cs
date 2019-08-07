@@ -28,6 +28,8 @@ namespace NetCore.AuthSample
             //With just role
             services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
                     .AddPcIdentityPolicy<UserRole>("UserPolicy")
+                    .AddPcIdentityPolicy<WorkerRole>("WorkerPolicy")
+                    .AddPcMultiRoleIdentityPolicy<AdminRole, UserRole>("AdminOrUserPolicy")
                     .AddDefaultPcIdentityPolicy();
 
             //With own classes
