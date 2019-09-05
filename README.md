@@ -4,7 +4,7 @@
 
 Package avialalbe at [NuGet](https://www.nuget.org/packages/PortaCapena.Authentication.NetCore/)
 
-> Install-Package PortaCapena.Authentication.NetCore -Version 2.0.2
+> Install-Package PortaCapena.Authentication.NetCore -Version 2.1.0
 
 
 As the authorization is based on roles first we have to define roles, requirement and handler i.e:
@@ -24,8 +24,11 @@ Once we have defined the example role its time to register authentication in **S
 
 First step is to set IdentityRequirements to *ConfigureServices* method as below. Keep it mind this has to be set before AddMvc() extensions method:
 ```csharp
+         //single roles
 services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
-         //can add mulitple poicies for any roles
+        .AddPcIdentityPolicy<UserRole>("UserRole")
+        //or multiple roles for one policy availalbe since 2.1.0
+        .AddPcMultiRoleIdentityPolicy<AdminRole, UserRole>("AdminOrUserPolicy")
         .AddDefaultPcIdentityPolicy();
 ```
 
