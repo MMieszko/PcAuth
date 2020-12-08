@@ -1,6 +1,6 @@
 ﻿using PortaCapena.Authentication.NetCore.Core;
 
-namespace NetCore.AuthSample.Auth
+namespace WebApi.Core
 {
     public class AdminAndUserIdentityHandler : PcMultiIdentityHandler
     {

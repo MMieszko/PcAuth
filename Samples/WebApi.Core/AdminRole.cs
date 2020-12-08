@@ -1,10 +1,10 @@
 ﻿using PortaCapena.Authentication.NetCore.Abstraction;
 
-namespace NetCore.AuthSample.Auth
+namespace WebApi.Core
 {
-    public class UserRole : Role
+    public class AdminRole : Role
     {
-        public override object Value => 10;
+        public override object Value => 1;
 
         public override string ToString() => Value.ToString();
     }

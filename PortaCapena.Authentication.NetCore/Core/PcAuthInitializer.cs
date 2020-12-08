@@ -21,7 +21,6 @@ namespace PortaCapena.Authentication.NetCore.Core
                 ValidAudience = null,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero,
-                
             };
         }
     }

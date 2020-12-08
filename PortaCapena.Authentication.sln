@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortaCapena.Authentication.NetCore", "PortaCapena.Authentication.NetCore\PortaCapena.Authentication.NetCore.csproj", "{393225C2-776D-4F8A-977E-02BF4005BC11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{96D46B00-95DD-41E1-A0F4-13834A5A35A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore.AuthSample", "Samples\NetCore.AuthSample\NetCore.AuthSample.csproj", "{7F532680-881C-4C80-8806-3844F6762501}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Core", "Samples\WebApi.Core\WebApi.Core.csproj", "{65239675-A122-4ADD-8708-6B9CC325B0E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{393225C2-776D-4F8A-977E-02BF4005BC11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F532680-881C-4C80-8806-3844F6762501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F532680-881C-4C80-8806-3844F6762501}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F532680-881C-4C80-8806-3844F6762501}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F532680-881C-4C80-8806-3844F6762501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65239675-A122-4ADD-8708-6B9CC325B0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65239675-A122-4ADD-8708-6B9CC325B0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65239675-A122-4ADD-8708-6B9CC325B0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65239675-A122-4ADD-8708-6B9CC325B0E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7F532680-881C-4C80-8806-3844F6762501} = {96D46B00-95DD-41E1-A0F4-13834A5A35A9}
+		{65239675-A122-4ADD-8708-6B9CC325B0E3} = {96D46B00-95DD-41E1-A0F4-13834A5A35A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ACCC1D9-A7C8-4C00-8CDD-3C7F860DD7A8}

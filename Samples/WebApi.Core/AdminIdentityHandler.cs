@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using PortaCapena.Authentication.NetCore.Core;
 using PortaCapena.Authentication.NetCore.Exceptions;
 
-namespace NetCore.AuthSample.Auth
+namespace WebApi.Core
 {
     //Optional
     public class AdminIdentityHandler : PcIdentityHandler<AdminRole>

@@ -15,11 +15,13 @@ namespace PortaCapena.Authentication.NetCore.Configuration
         public Func<Task<string>> NonceGenerator { get; internal set; }
         public string SecurityAlgorithm { get; internal set; }
         public IList<Claim> Claims { get; internal set; }
-        public bool AutoRefresh { get; internal set; } = true;
-        public string ExchangeTokenName { get; internal set; } = "X-Access-Token";
+        public bool AutoRefresh { get; internal set; }
+        public string ExchangeTokenName { get; internal set; }
 
         public TokenOptions()
         {
+            ExchangeTokenName = "X-Access-Token";
+            AutoRefresh = true;
             NonceGenerator = () => Task.FromResult(Guid.NewGuid().ToString());
         }
     }

@@ -2,7 +2,7 @@
 using PortaCapena.Authentication.NetCore.Abstraction;
 using PortaCapena.Authentication.NetCore.Core;
 
-namespace NetCore.AuthSample.Auth
+namespace WebApi.Core
 {
     public class AdminAndUserIdentityRequirement : PcMultiIdentityRequirement
     {

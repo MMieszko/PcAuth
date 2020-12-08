@@ -1,15 +1,21 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetCore.AuthSample.Auth;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PortaCapena.Authentication.NetCore.Configuration;
 using PortaCapena.Authentication.NetCore.Core;
 using PortaCapena.Authentication.NetCore.Extensions;
 
-namespace NetCore.AuthSample
+namespace WebApi.Core
 {
     public class Startup
     {
@@ -23,14 +29,14 @@ namespace NetCore.AuthSample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddControllers();
 
             //With just role
             services.AddPcIdentityPolicy<AdminRole>("AdminPolicy")
-                    .AddPcIdentityPolicy<UserRole>("UserPolicy")
-                    .AddPcIdentityPolicy<WorkerRole>("WorkerPolicy")
-                    .AddPcMultiRoleIdentityPolicy<AdminRole, UserRole>("AdminOrUserPolicy")
-                    .AddDefaultPcIdentityPolicy();
+                .AddPcIdentityPolicy<UserRole>("UserPolicy")
+                .AddPcIdentityPolicy<WorkerRole>("WorkerPolicy")
+                .AddPcMultiRoleIdentityPolicy<AdminRole, UserRole>("AdminOrUserPolicy")
+                .AddDefaultPcIdentityPolicy();
 
             //With own classes
             //services.AddPcIdentityPolicy<AdminRole, PcIdentityRequirement<AdminRole>, PcIdentityHandler<AdminRole>>(nameof(AdminRequirement))
@@ -39,28 +45,21 @@ namespace NetCore.AuthSample
             //Built in classes
             //services.AddPcIdentityPolicy<AdminRole, AdminRequirement, AdminIdentityHandler>(nameof(AdminRequirement))
             //        .AddDefaultPcIdentity();
-
-            services.AddMvc();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-
-
-            //Built in
             app.UsePcIdentityMiddleware<PcIdentityMiddleware>(TokenOptionsBuilder.Create("access_token")
-                                                        .SetSecretKey("this is my custom Secret key for authnetication")
-                                                        .SetExpiration(TimeSpan.FromMinutes(15))
-                                                        .SetAutoRefresh(false)
-                                                        .Build());
-
+                .SetSecretKey("this is my custom Secret key for authnetication")
+                .SetExpiration(TimeSpan.FromMinutes(15))
+                .SetAutoRefresh(false)
+                .Build());
 
             app.UseCors(config => config.WithHeaders(TokenManager.TokenOptions.ExchangeTokenName).AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
@@ -74,10 +73,16 @@ namespace NetCore.AuthSample
 
             });
 
-            var token = TokenManager.Create(126, new AdminRole());
+            app.UseHttpsRedirection();
 
+            app.UseRouting();
 
-            app.UseMvc();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

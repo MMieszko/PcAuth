@@ -13,16 +13,19 @@ namespace PortaCapena.Authentication.NetCore.Core
             Options = options;
         }
 
-        public virtual async Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
+        public virtual Task<AuthorizationPolicy> GetPolicyAsync(string policyName)
         {
-            return await new DefaultAuthorizationPolicyProvider(Options).GetPolicyAsync(policyName);
+            return new DefaultAuthorizationPolicyProvider(Options).GetPolicyAsync(policyName);
         }
 
-        public virtual async Task<AuthorizationPolicy> GetDefaultPolicyAsync()
+        public virtual Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
-            await Task.Delay(1);
+            return Task.FromResult(PcDefaultPolicy.Create as AuthorizationPolicy);
+        }
 
-            return PcDefaultPolicy.Create;
+        public Task<AuthorizationPolicy> GetFallbackPolicyAsync()
+        {
+            return Task.FromResult<AuthorizationPolicy>(null);
         }
     }
 }

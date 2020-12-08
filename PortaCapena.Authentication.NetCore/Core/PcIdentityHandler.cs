@@ -33,7 +33,6 @@ namespace PortaCapena.Authentication.NetCore.Core
         /// <summary>
         /// Throws <see cref="AuthException"/> with provided message
         /// </summary>
-        /// <param name="message">Exception message</param>
         /// <param name="exception">Original exception</param>
         public virtual Task OnUnauthorizedAsync(AuthException exception)
         {

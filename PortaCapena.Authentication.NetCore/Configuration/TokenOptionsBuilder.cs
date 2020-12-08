@@ -60,7 +60,7 @@ namespace PortaCapena.Authentication.NetCore.Configuration
         }
 
         /// <summary>
-        /// Enable token to autorefersh each request. By default value is set to true.
+        /// Enable token to auto refresh each request. By default value is set to true.
         /// </summary>
         /// <param name="key">Algorithm</param>
         /// <returns>Self</returns>
@@ -89,9 +89,9 @@ namespace PortaCapena.Authentication.NetCore.Configuration
         public TokenOptions Build()
         {
             if (string.IsNullOrEmpty(_tokenOptions.TokenName))
-                throw new ArgumentException("Exception occured while trying to build a token. Token name is required!");
-            if (_tokenOptions.Expiration == default(TimeSpan))
-                throw new ArgumentException("Exception occured while trying to build a token. Expiration is required!");
+                throw new ArgumentException("Exception occurred while trying to build a token. Token name is required!");
+            if (_tokenOptions.Expiration == default)
+                throw new ArgumentException("Exception occurred while trying to build a token. Expiration is required!");
 
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenOptions.SecretKey));
 
